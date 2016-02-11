@@ -1,3 +1,3 @@
 require 'webrick'
 
-WEBrick::HTTPServer.new(:DocumentRoot => "./", :Port => 8000).start
+WEBrick::HTTPServer.new(:DocumentRoot => "./", :Port => 18000).start

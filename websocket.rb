@@ -1,3 +1,4 @@
+require 'rubygems'
 require "em-websocket"
 require "pp"
 require "json"
@@ -55,7 +56,7 @@ thread = Thread.new do
   end
 end
 
-EM::WebSocket.start({:host => "0.0.0.0", :port => 18888}) do |ws_conn|
+EM::WebSocket.start({:host => "0.0.0.0", :port => 18001}) do |ws_conn|
   ws_conn.onopen do
     @connections << ws_conn
   end

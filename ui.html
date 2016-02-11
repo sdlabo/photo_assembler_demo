@@ -17,7 +17,7 @@
 $(window).load(function(){
 $("#assembling").hide();
 $("#bigfig").hide();
-var ws = new WebSocket('ws://127.0.0.1:18888');
+var ws = new WebSocket('ws://133.70.169.157:18001');
 
 $("#send").on('click', function(){
   ws.send($('#message').val());
