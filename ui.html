@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="author" content="Saruwatari Laboratory">
+    <meta name="copyright" content="(C) 2014 Saruwatari Laboratory">
+    <meta http-equiv="Content-Language" content="ja">
+
+    <title>猿渡研究室 @ 静岡大学 情報学部/学術院情報学領域</title>
+
+    <link href="/sarulab.css" media="all" rel="stylesheet" type="text/css">
+    <script src="./jquery-1.12.0.min.js"></script>
+</head>
+
+<body>
+<script>
+$(window).load(function(){
+$("#assembling").hide();
+$("#bigfig").hide();
+var ws = new WebSocket('ws://127.0.0.1:18888');
+
+$("#send").on('click', function(){
+  ws.send($('#message').val());
+});
+
+ws.onmessage = function(event){
+  console.log(event.data);
+  msg = JSON.parse(event.data);
+  console.log(msg);
+  console.log(msg.stat);
+  if(msg.stat == "assembling"){
+    $("#assembling").show("normal");
+    $("#bigfig").hide();
+  }else if(msg.stat == "complete"){
+    $("#bigfigimg").attr('src', "./fig/big.jpg" + "?" + $.now());
+    $("#assembling").hide();
+    $("#bigfig").show("slow");
+  }else{
+    $("#assembling").hide();
+    $("#bigfig").hide();
+  }
+
+  for(i = 0; i < msg.files.length; i++){
+    s = "#fig" + i;
+    $(s).attr('src', msg.files[i]);
+  }
+};
+})
+</script>
+  <div id="body">
+    <table>
+      <tr>
+	<td><img class="small" id="fig0" src="./black.jpg"></td>
+	<td><img class="small" id="fig1" src="./black.jpg"></td>
+	<td><img class="small" id="fig2" src="./black.jpg"></td>
+	<td><img class="small" id="fig3" src="./black.jpg"></td>
+      </tr>
+      <tr>
+	<td><img class="small" id="fig4" src="./black.jpg"></td>
+	<td><img class="small" id="fig5" src="./black.jpg"></td>
+	<td><img class="small" id="fig6" src="./black.jpg"></td>
+	<td><img class="small" id="fig7" src="./black.jpg"></td>
+      </tr>
+      <tr>
+	<td><img class="small" id="fig8" src="./black.jpg"></td>
+	<td><img class="small" id="fig9" src="./black.jpg"></td>
+	<td><img class="small" id="fig10" src="./black.jpg"></td>
+	<td><img class="small" id="fig11" src="./black.jpg"></td>
+      </tr>
+    </table>
+<div id="assembling">合成中</div>
+<div id="bigfig"><img class="big" id="bigfigimg" src="./black.jpg"></div>
+  </div>
+</body>
+</html>
